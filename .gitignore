@@ -1,0 +1,18 @@
+# Ignore EVERYTHING by default
+*
+
+# Except these directories
+!src/
+!configs/
+!data/
+
+# Except these specific files
+!requirements.txt
+!scalability.md
+
+# Allow necessary files inside tracked directories
+!src/*.py
+!configs/*.py
+
+# Prevent ignoring .gitignore itself
+!.gitignore
