@@ -104,6 +104,7 @@ def load_and_chunk_pdfs() -> List[Dict]:
     return chunks
 
 
+
 if __name__ == "__main__":
     chunks = load_and_chunk_pdfs()
     if chunks:
