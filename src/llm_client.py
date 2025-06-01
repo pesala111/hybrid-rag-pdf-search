@@ -6,10 +6,10 @@ load_dotenv()
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-def call_llm(prompt: str) -> str:
-    from openai import OpenAI
+def call_llm_query(prompt: str) -> str:
+    """For user queries (e.g., general Q&A)"""
     resp = client.chat.completions.create(
-        model=os.getenv("LLM_MODEL", "gpt-3.5-turbo"),
+        model=os.getenv("LLM_MODEL", "gpt-4"),
         messages=[{"role": "user", "content": prompt}]
     )
     return resp.choices[0].message.content

@@ -5,7 +5,10 @@ import re
 import logging
 from typing import List, Dict
 import pdfplumber
+
 from configs.config import DATA_ZIP, EXTRACT_DIR
+from src.llm_client import call_llm_extract
+from src.extraction_schema import extract_keywords_with_regex
 
 logging.getLogger("pdfminer").setLevel(logging.ERROR)
 
@@ -25,37 +28,45 @@ def clean_text_lines(lines: List[str]) -> List[str]:
     for line in lines:
         line = line.replace('\u00A0', ' ')  # Normalize non-breaking space
         line = re.sub(r'\s+', ' ', line).strip()
-        line = re.sub(r'^[-•*_]+\s*', '', line)  # Remove leading bullet hyphens/dots/etc.
+        line = re.sub(r'^[-•*_]+\s*', '', line)  # Remove bullet markers
 
-        # Skip boilerplate headers/footers
-        if re.search(r'product datasheet', line, re.IGNORECASE):
+        # Skip boilerplate
+        if re.search(r'product datasheet|©.*osram.*all rights reserved|page \d+ of \d+|\b\d{4},\s*\d{2}:\d{2}:\d{2}', line, re.IGNORECASE):
             continue
-        if re.search(r'©.*osram.*all rights reserved', line, re.IGNORECASE):
-            continue
-        if re.search(r'page \d+ of \d+', line, re.IGNORECASE):
-            continue
-        if re.search(r'\b\d{4},\s*\d{2}:\d{2}:\d{2}', line):  # timestamps
-            continue
-
         if not line:
-            continue  # skip empty lines
+            continue
 
         if buffer:
             buffer += " " + line
         else:
             buffer = line
 
-        # If line ends with sentence-ending punctuation or is a clear key-value or title line, flush it
         if re.search(r'[.:;!?]$', line) or ':' in line or re.match(r'^[A-Z].*$', line):
             cleaned_lines.append(buffer.strip())
             buffer = ""
 
-    # Add any leftover buffer
     if buffer:
         cleaned_lines.append(buffer.strip())
 
     return cleaned_lines
 
+
+def extract_keywords(text: str) -> Dict:
+    prompt = f"""You are a structured data extractor. Extract the following fields from the given product datasheet text:
+
+{keyword_categories}
+
+Respond in JSON format with keys as field names and values as extracted values. If a field is missing, return null.
+
+Text:
+\"\"\"{text}\"\"\"
+"""
+    response = call_llm_extract(prompt)
+    try:
+        import json
+        return json.loads(response)
+    except Exception:
+        return {"llm_extraction_raw": response}
 
 
 def extract_text(pdf_path: str) -> Dict[str, str]:
@@ -70,13 +81,16 @@ def extract_text(pdf_path: str) -> Dict[str, str]:
             cleaned = clean_text_lines(lines)
             all_lines.extend(cleaned)
 
-    structured_text = "\n".join(all_lines)      # readable format for LLM
-    embedding_text = " ".join(all_lines)        # continuous format for vector store
+    structured_text = "\n".join(all_lines)
+    embedding_text = " ".join(all_lines)
+    extracted_meta = extract_keywords_with_regex(structured_text)
 
     return {
         "structured": structured_text.strip(),
-        "embedding": embedding_text.strip()
+        "embedding": embedding_text.strip(),
+        "extracted_metadata": extracted_meta
     }
+
 
 
 def load_and_chunk_pdfs() -> List[Dict]:
@@ -85,9 +99,7 @@ def load_and_chunk_pdfs() -> List[Dict]:
 
     for root, _, files in os.walk(EXTRACT_DIR):
         for fname in files:
-            if not fname.lower().endswith('.pdf'):
-                continue
-            if fname.startswith("._") or "__MACOSX" in root:
+            if not fname.lower().endswith('.pdf') or fname.startswith("._") or "__MACOSX" in root:
                 continue
 
             path = os.path.join(root, fname)
@@ -96,7 +108,11 @@ def load_and_chunk_pdfs() -> List[Dict]:
                 chunks.append({
                     "content": text_obj["structured"],
                     "content_for_embedding": text_obj["embedding"],
-                    "metadata": {"source": fname, "chunk_index": 0}
+                    "metadata": {
+                        "source": fname,
+                        "chunk_index": 0,
+                        "extracted_fields": text_obj["extracted_metadata"]
+                    }
                 })
             except Exception as e:
                 print(f"⚠️ Skipping '{fname}' due to error: {e}")
@@ -105,11 +121,13 @@ def load_and_chunk_pdfs() -> List[Dict]:
 
 
 
+
 if __name__ == "__main__":
     chunks = load_and_chunk_pdfs()
     if chunks:
-        print("\n📄 Extracted chunk 1 preview:\n" + "-" * 40)
-        print(chunks[0]["content"][:4000])
-        print("\n🧾 Metadata:", chunks[0]["metadata"])
+        for i, chunk in enumerate(chunks):
+            print(f"\n📄 Extracted chunk {i + 1} preview:\n" + "-" * 40)
+            print(chunk["content"][:4000])
+            print("\n🧾 Metadata:", chunk["metadata"])
     else:
         print("⚠️ No chunks extracted.")

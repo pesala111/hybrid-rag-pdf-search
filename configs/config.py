@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]               # repo root
 
 # Paths
 DATA_DIR = ROOT / "data"
-DATA_ZIP = "/Users/pesala/Downloads/dataset coding challenge-20250530T131432Z-1-001.zip"
+DATA_ZIP = "/Users/pesala/Downloads/dataset coding challenge 4.zip"
 EXTRACT_DIR = os.getenv("EXTRACT_DIR", Path(tempfile.gettempdir()) / "pdf_dataset")
 
 # Chunking

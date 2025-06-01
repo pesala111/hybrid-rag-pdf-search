@@ -5,12 +5,12 @@ from typing import List, Dict
 from src.pdf_loader import load_and_chunk_pdfs
 from src.embedder import embed_texts
 from src.vector_store import FaissVectorStore
-from src.llm_client import call_llm
+from src.llm_client import call_llm_query
 from configs.config import TOP_K
 
 def build_pipeline():
     chunks = load_and_chunk_pdfs()
-    texts = [c['content'] for c in chunks]
+    texts = [c['content_for_embedding'] for c in chunks]
     metadatas = [c['metadata'] for c in chunks]
 
     embeddings = embed_texts(texts)
@@ -35,4 +35,5 @@ def query_pipeline(query: str, store: FaissVectorStore, chunks: List[Dict], top_
         + "\n---\n".join(contexts)
         + f"\n\nQuestion: {query}\nAnswer:"
     )
-    return call_llm(prompt)
+
+    return call_llm_query(prompt)
