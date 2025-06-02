@@ -1,0 +1,292 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2560pt" height="527pt" viewBox="0.00 0.00 2560.17 527.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 523)">
+<title>RAG_Architecture</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-523 2556.17,-523 2556.17,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>cluster_retrieval</title>
+<polygon fill="#f5f5dc" stroke="#d3d3d3" points="1392.83,-208 1392.83,-511 2039.61,-511 2039.61,-208 1392.83,-208"/>
+<text text-anchor="middle" x="1716.22" y="-494.4" font-family="Helvetica,sans-Serif" font-size="14.00">RETRIEVAL LAYER</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_generation</title>
+<polygon fill="#f0f8ff" stroke="#d3d3d3" points="2060.61,-318 2060.61,-451 2317.49,-451 2317.49,-318 2060.61,-318"/>
+<text text-anchor="middle" x="2189.05" y="-434.4" font-family="Helvetica,sans-Serif" font-size="14.00">GENERATION LAYER</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_ingestion</title>
+<polygon fill="#fffacd" stroke="#d3d3d3" points="8,-8 8,-200 1552.65,-200 1552.65,-8 8,-8"/>
+<text text-anchor="middle" x="780.32" y="-183.4" font-family="Helvetica,sans-Serif" font-size="14.00">INGESTION PIPELINE</text>
+<text text-anchor="middle" x="780.32" y="-166.6" font-family="Helvetica,sans-Serif" font-size="14.00">(Orchestrated by Airflow)</text>
+</g>
+<!-- UI -->
+<g id="node1" class="node">
+<title>UI</title>
+<ellipse fill="#aec6cf" stroke="black" cx="646.63" cy="-290" rx="73.49" ry="29.42"/>
+<text text-anchor="middle" x="646.63" y="-294.2" font-family="Helvetica,sans-Serif" font-size="14.00">User Interface</text>
+<text text-anchor="middle" x="646.63" y="-277.4" font-family="Helvetica,sans-Serif" font-size="14.00">(Chatbot/App)</text>
+</g>
+<!-- QPR_Agent -->
+<g id="node2" class="node">
+<title>QPR_Agent</title>
+<polygon fill="#ffdab9" stroke="black" points="939.9,-310.8 799.4,-310.8 799.4,-269.2 939.9,-269.2 939.9,-310.8"/>
+<text text-anchor="middle" x="869.65" y="-294.2" font-family="Helvetica,sans-Serif" font-size="14.00">Query Processing &amp;</text>
+<text text-anchor="middle" x="869.65" y="-277.4" font-family="Helvetica,sans-Serif" font-size="14.00">Routing Agent</text>
+</g>
+<!-- UI&#45;&gt;QPR_Agent -->
+<g id="edge7" class="edge">
+<title>UI-&gt;QPR_Agent</title>
+<path fill="none" stroke="black" d="M720.61,-290C742.13,-290 765.81,-290 787.8,-290"/>
+<polygon fill="black" stroke="black" points="787.61,-293.5 797.61,-290 787.61,-286.5 787.61,-293.5"/>
+</g>
+<!-- Ret_Orchestrator -->
+<g id="node3" class="node">
+<title>Ret_Orchestrator</title>
+<polygon fill="#add8e6" stroke="black" points="1305.65,-308 1152.72,-308 1152.72,-272 1305.65,-272 1305.65,-308"/>
+<text text-anchor="middle" x="1229.18" y="-285.8" font-family="Helvetica,sans-Serif" font-size="14.00">Retrieval Orchestrator</text>
+</g>
+<!-- QPR_Agent&#45;&gt;Ret_Orchestrator -->
+<g id="edge8" class="edge">
+<title>QPR_Agent-&gt;Ret_Orchestrator</title>
+<path fill="none" stroke="black" d="M940.01,-290C997.46,-290 1079.4,-290 1141.23,-290"/>
+<polygon fill="black" stroke="black" points="1141.01,-293.5 1151.01,-290 1141.01,-286.5 1141.01,-293.5"/>
+<text text-anchor="middle" x="1023.55" y="-293" font-family="Helvetica,sans-Serif" font-size="10.00">Query Expansion/Rewriting</text>
+</g>
+<!-- Hybrid_Search -->
+<g id="node4" class="node">
+<title>Hybrid_Search</title>
+<polygon fill="#e0e0e0" stroke="black" points="1537.04,-374.8 1400.83,-374.8 1400.83,-333.2 1537.04,-333.2 1537.04,-374.8"/>
+<text text-anchor="middle" x="1468.94" y="-358.2" font-family="Helvetica,sans-Serif" font-size="14.00">Hybrid Search</text>
+<text text-anchor="middle" x="1468.94" y="-341.4" font-family="Helvetica,sans-Serif" font-size="14.00">(Vector + Keyword)</text>
+</g>
+<!-- Ret_Orchestrator&#45;&gt;Hybrid_Search -->
+<g id="edge9" class="edge">
+<title>Ret_Orchestrator-&gt;Hybrid_Search</title>
+<path fill="none" stroke="black" d="M1298.63,-308.43C1326.98,-316.06 1360.01,-324.95 1389.34,-332.84"/>
+<polygon fill="black" stroke="black" points="1388.36,-336.2 1398.92,-335.42 1390.17,-329.44 1388.36,-336.2"/>
+</g>
+<!-- KG_DB -->
+<g id="node6" class="node">
+<title>KG_DB</title>
+<polygon fill="#e0e0e0" stroke="black" points="1822.19,-308 1677.02,-308 1677.02,-216 1822.19,-216 1822.19,-308"/>
+<text text-anchor="middle" x="1749.6" y="-291.4" font-family="Helvetica,sans-Serif" font-size="14.00">Knowledge Graph</text>
+<text text-anchor="middle" x="1749.6" y="-274.6" font-family="Helvetica,sans-Serif" font-size="14.00">(Neo4j/ArangoDB)</text>
+<text text-anchor="middle" x="1749.6" y="-257.8" font-family="Helvetica,sans-Serif" font-size="14.00">- Entities</text>
+<text text-anchor="middle" x="1749.6" y="-241" font-family="Helvetica,sans-Serif" font-size="14.00">- Relationships</text>
+<text text-anchor="middle" x="1749.6" y="-224.2" font-family="Helvetica,sans-Serif" font-size="14.00">- Graph Embeddings</text>
+</g>
+<!-- Ret_Orchestrator&#45;&gt;KG_DB -->
+<g id="edge10" class="edge">
+<title>Ret_Orchestrator-&gt;KG_DB</title>
+<path fill="none" stroke="black" d="M1306.12,-285.9C1401.89,-280.73 1565.99,-271.86 1665.17,-266.51"/>
+<polygon fill="black" stroke="black" points="1665.33,-270 1675.13,-265.97 1664.96,-263.01 1665.33,-270"/>
+<text text-anchor="middle" x="1468.94" y="-296.14" font-family="Helvetica,sans-Serif" font-size="10.00">Graph Traversal</text>
+<text text-anchor="middle" x="1468.94" y="-284.14" font-family="Helvetica,sans-Serif" font-size="10.00">(if applicable)</text>
+</g>
+<!-- Vector_DB -->
+<g id="node5" class="node">
+<title>Vector_DB</title>
+<polygon fill="#e0e0e0" stroke="black" points="1822.97,-418 1676.24,-418 1676.24,-326 1822.97,-326 1822.97,-418"/>
+<text text-anchor="middle" x="1749.6" y="-401.4" font-family="Helvetica,sans-Serif" font-size="14.00">Vector Database</text>
+<text text-anchor="middle" x="1749.6" y="-384.6" font-family="Helvetica,sans-Serif" font-size="14.00">(Pinecone/Weaviate)</text>
+<text text-anchor="middle" x="1749.6" y="-367.8" font-family="Helvetica,sans-Serif" font-size="14.00">- Document Chunks</text>
+<text text-anchor="middle" x="1749.6" y="-351" font-family="Helvetica,sans-Serif" font-size="14.00">- Chunk Embeddings</text>
+<text text-anchor="middle" x="1749.6" y="-334.2" font-family="Helvetica,sans-Serif" font-size="14.00">- Metadata</text>
+</g>
+<!-- Hybrid_Search&#45;&gt;Vector_DB -->
+<g id="edge1" class="edge">
+<title>Hybrid_Search-&gt;Vector_DB</title>
+<path fill="none" stroke="black" d="M1537.4,-358.36C1575.68,-360.83 1623.93,-363.95 1664.64,-366.58"/>
+<polygon fill="black" stroke="black" points="1664.2,-370.05 1674.4,-367.21 1664.65,-363.07 1664.2,-370.05"/>
+</g>
+<!-- Hybrid_Search&#45;&gt;KG_DB -->
+<g id="edge2" class="edge">
+<title>Hybrid_Search-&gt;KG_DB</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1534.22,-332.78C1573.4,-319.84 1623.88,-303.18 1666,-289.27"/>
+<polygon fill="black" stroke="black" points="1666.97,-292.64 1675.37,-286.18 1664.77,-285.99 1666.97,-292.64"/>
+</g>
+<!-- Reranker -->
+<g id="node7" class="node">
+<title>Reranker</title>
+<polygon fill="#e0e0e0" stroke="black" points="1809.74,-477.8 1689.47,-477.8 1689.47,-436.2 1809.74,-436.2 1809.74,-477.8"/>
+<text text-anchor="middle" x="1749.6" y="-461.2" font-family="Helvetica,sans-Serif" font-size="14.00">Reranker</text>
+<text text-anchor="middle" x="1749.6" y="-444.4" font-family="Helvetica,sans-Serif" font-size="14.00">(Cohere Rerank)</text>
+</g>
+<!-- Hybrid_Search&#45;&gt;Reranker -->
+<g id="edge5" class="edge">
+<title>Hybrid_Search-&gt;Reranker</title>
+<path fill="none" stroke="black" d="M1527.34,-375.22C1571.83,-391.66 1633.61,-414.5 1680.59,-431.86"/>
+<polygon fill="black" stroke="black" points="1679.26,-435.1 1689.86,-435.29 1681.69,-428.54 1679.26,-435.1"/>
+<text text-anchor="middle" x="1610.44" y="-423.74" font-family="Helvetica,sans-Serif" font-size="10.00">Initial Top-K Retrieval</text>
+</g>
+<!-- Retrieved_Context -->
+<g id="node8" class="node">
+<title>Retrieved_Context</title>
+<polygon fill="#e0e0e0" stroke="black" points="2031.61,-392.8 1859.97,-392.8 1859.97,-351.2 2031.61,-351.2 2031.61,-392.8"/>
+<text text-anchor="middle" x="1945.79" y="-376.2" font-family="Helvetica,sans-Serif" font-size="14.00">Retrieved Chunks/Nodes</text>
+<text text-anchor="middle" x="1945.79" y="-359.4" font-family="Helvetica,sans-Serif" font-size="14.00">(Context for LLM)</text>
+</g>
+<!-- Vector_DB&#45;&gt;Retrieved_Context -->
+<g id="edge3" class="edge">
+<title>Vector_DB-&gt;Retrieved_Context</title>
+<path fill="none" stroke="black" d="M1823.46,-372C1831.6,-372 1839.99,-372 1848.36,-372"/>
+<polygon fill="black" stroke="black" points="1848.24,-375.5 1858.24,-372 1848.24,-368.5 1848.24,-375.5"/>
+</g>
+<!-- KG_DB&#45;&gt;Retrieved_Context -->
+<g id="edge4" class="edge">
+<title>KG_DB-&gt;Retrieved_Context</title>
+<path fill="none" stroke="black" d="M1822.64,-302.8C1847.63,-316.96 1875,-332.46 1897.48,-345.2"/>
+<polygon fill="black" stroke="black" points="1895.7,-348.22 1906.13,-350.1 1899.15,-342.12 1895.7,-348.22"/>
+</g>
+<!-- Reranker&#45;&gt;Retrieved_Context -->
+<g id="edge6" class="edge">
+<title>Reranker-&gt;Retrieved_Context</title>
+<path fill="none" stroke="black" d="M1802.47,-435.73C1809.38,-432.83 1816.36,-429.86 1822.97,-427 1844.37,-417.74 1867.74,-407.27 1888.23,-397.98"/>
+<polygon fill="black" stroke="black" points="1889.63,-401.18 1897.29,-393.86 1886.73,-394.81 1889.63,-401.18"/>
+</g>
+<!-- LLM_Integration -->
+<g id="node9" class="node">
+<title>LLM_Integration</title>
+<polygon fill="#e0e0e0" stroke="black" points="2309.49,-418 2068.61,-418 2068.61,-326 2309.49,-326 2309.49,-418"/>
+<text text-anchor="middle" x="2189.05" y="-401.4" font-family="Helvetica,sans-Serif" font-size="14.00">LLM Integration</text>
+<text text-anchor="middle" x="2189.05" y="-384.6" font-family="Helvetica,sans-Serif" font-size="14.00">(OpenAI GPT-4o, Anthropic Claude)</text>
+<text text-anchor="middle" x="2189.05" y="-367.8" font-family="Helvetica,sans-Serif" font-size="14.00">- Prompt Engineering</text>
+<text text-anchor="middle" x="2189.05" y="-351" font-family="Helvetica,sans-Serif" font-size="14.00">- Context</text>
+<text text-anchor="middle" x="2189.05" y="-334.2" font-family="Helvetica,sans-Serif" font-size="14.00">- Conversational Memory</text>
+</g>
+<!-- Retrieved_Context&#45;&gt;LLM_Integration -->
+<g id="edge11" class="edge">
+<title>Retrieved_Context-&gt;LLM_Integration</title>
+<path fill="none" stroke="black" d="M2031.85,-372C2039.96,-372 2048.31,-372 2056.73,-372"/>
+<polygon fill="black" stroke="black" points="2056.73,-375.5 2066.73,-372 2056.73,-368.5 2056.73,-375.5"/>
+</g>
+<!-- Generated_Response -->
+<g id="node10" class="node">
+<title>Generated_Response</title>
+<ellipse fill="#90ee90" stroke="black" cx="2449.33" cy="-372" rx="102.84" ry="18"/>
+<text text-anchor="middle" x="2449.33" y="-367.8" font-family="Helvetica,sans-Serif" font-size="14.00">Generated Response</text>
+</g>
+<!-- LLM_Integration&#45;&gt;Generated_Response -->
+<g id="edge12" class="edge">
+<title>LLM_Integration-&gt;Generated_Response</title>
+<path fill="none" stroke="black" d="M2309.74,-372C2318.08,-372 2326.48,-372 2334.79,-372"/>
+<polygon fill="black" stroke="black" points="2334.55,-375.5 2344.55,-372 2334.55,-368.5 2334.55,-375.5"/>
+</g>
+<!-- Airflow -->
+<g id="node11" class="node">
+<title>Airflow</title>
+<polygon fill="#ffdead" stroke="black" points="260.73,-103.8 16,-103.8 16,-99.8 12,-99.8 12,-95.8 16,-95.8 16,-70.2 12,-70.2 12,-66.2 16,-66.2 16,-62.2 260.73,-62.2 260.73,-103.8"/>
+<polyline fill="none" stroke="black" points="16,-99.8 20,-99.8 20,-95.8 16,-95.8"/>
+<polyline fill="none" stroke="black" points="16,-70.2 20,-70.2 20,-66.2 16,-66.2"/>
+<text text-anchor="middle" x="138.37" y="-87.2" font-family="Helvetica,sans-Serif" font-size="14.00">Apache Airflow</text>
+<text text-anchor="middle" x="138.37" y="-70.4" font-family="Helvetica,sans-Serif" font-size="14.00">(Workflow Scheduler &amp; Orchestrator)</text>
+</g>
+<!-- Raw_Docs -->
+<g id="node12" class="node">
+<title>Raw_Docs</title>
+<path fill="#deb887" stroke="black" d="M498.93,-106.4C498.93,-109.27 453.84,-111.6 398.33,-111.6 342.82,-111.6 297.73,-109.27 297.73,-106.4 297.73,-106.4 297.73,-59.6 297.73,-59.6 297.73,-56.73 342.82,-54.4 398.33,-54.4 453.84,-54.4 498.93,-56.73 498.93,-59.6 498.93,-59.6 498.93,-106.4 498.93,-106.4"/>
+<path fill="none" stroke="black" d="M498.93,-106.4C498.93,-103.53 453.84,-101.2 398.33,-101.2 342.82,-101.2 297.73,-103.53 297.73,-106.4"/>
+<text text-anchor="middle" x="398.33" y="-87.2" font-family="Helvetica,sans-Serif" font-size="14.00">Raw Documents</text>
+<text text-anchor="middle" x="398.33" y="-70.4" font-family="Helvetica,sans-Serif" font-size="14.00">(10,000 docs, S3/ADLS/GCS)</text>
+</g>
+<!-- Airflow&#45;&gt;Raw_Docs -->
+<!-- Spark_Parse -->
+<g id="node13" class="node">
+<title>Spark_Parse</title>
+<polygon fill="#afeeee" stroke="black" points="757.33,-112.2 535.93,-112.2 535.93,-53.8 757.33,-53.8 757.33,-112.2"/>
+<text text-anchor="middle" x="646.63" y="-95.6" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 1:</text>
+<text text-anchor="middle" x="646.63" y="-78.8" font-family="Helvetica,sans-Serif" font-size="14.00">Document Parsing</text>
+<text text-anchor="middle" x="646.63" y="-62" font-family="Helvetica,sans-Serif" font-size="14.00">(Unstructured.io, Text Extraction)</text>
+</g>
+<!-- Raw_Docs&#45;&gt;Spark_Parse -->
+<g id="edge14" class="edge">
+<title>Raw_Docs-&gt;Spark_Parse</title>
+<path fill="none" stroke="black" d="M499.15,-83C507.41,-83 515.8,-83 524.19,-83"/>
+<polygon fill="black" stroke="black" points="524.09,-86.5 534.09,-83 524.09,-79.5 524.09,-86.5"/>
+</g>
+<!-- Spark_Chunk -->
+<g id="node14" class="node">
+<title>Spark_Chunk</title>
+<polygon fill="#afeeee" stroke="black" points="944.97,-120.6 794.33,-120.6 794.33,-45.4 944.97,-45.4 944.97,-120.6"/>
+<text text-anchor="middle" x="869.65" y="-104" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 2:</text>
+<text text-anchor="middle" x="869.65" y="-87.2" font-family="Helvetica,sans-Serif" font-size="14.00">Advanced Text</text>
+<text text-anchor="middle" x="869.65" y="-70.4" font-family="Helvetica,sans-Serif" font-size="14.00">Chunking &amp; Metadata</text>
+<text text-anchor="middle" x="869.65" y="-53.6" font-family="Helvetica,sans-Serif" font-size="14.00">Enrichment</text>
+</g>
+<!-- Spark_Parse&#45;&gt;Spark_Chunk -->
+<g id="edge15" class="edge">
+<title>Spark_Parse-&gt;Spark_Chunk</title>
+<path fill="none" stroke="black" d="M757.82,-83C766.12,-83 774.43,-83 782.55,-83"/>
+<polygon fill="black" stroke="black" points="782.38,-86.5 792.38,-83 782.38,-79.5 782.38,-86.5"/>
+</g>
+<!-- Spark_Embed -->
+<g id="node15" class="node">
+<title>Spark_Embed</title>
+<polygon fill="#afeeee" stroke="black" points="1356.23,-150.2 1102.14,-150.2 1102.14,-91.8 1356.23,-91.8 1356.23,-150.2"/>
+<text text-anchor="middle" x="1229.18" y="-133.6" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 3:</text>
+<text text-anchor="middle" x="1229.18" y="-116.8" font-family="Helvetica,sans-Serif" font-size="14.00">Embedding Generation</text>
+<text text-anchor="middle" x="1229.18" y="-100" font-family="Helvetica,sans-Serif" font-size="14.00">(Batch API Calls or Local Model Infer.)</text>
+</g>
+<!-- Spark_Chunk&#45;&gt;Spark_Embed -->
+<g id="edge16" class="edge">
+<title>Spark_Chunk-&gt;Spark_Embed</title>
+<path fill="none" stroke="black" d="M945.17,-90.92C987.13,-95.38 1040.86,-101.09 1090.22,-106.34"/>
+<polygon fill="black" stroke="black" points="1089.85,-109.82 1100.16,-107.39 1090.59,-102.86 1089.85,-109.82"/>
+</g>
+<!-- Spark_KG_Extract -->
+<g id="node16" class="node">
+<title>Spark_KG_Extract</title>
+<polygon fill="#afeeee" stroke="black" points="1300.99,-74.2 1157.38,-74.2 1157.38,-15.8 1300.99,-15.8 1300.99,-74.2"/>
+<text text-anchor="middle" x="1229.18" y="-57.6" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 4:</text>
+<text text-anchor="middle" x="1229.18" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Knowledge Graph</text>
+<text text-anchor="middle" x="1229.18" y="-24" font-family="Helvetica,sans-Serif" font-size="14.00">Extraction (Optional)</text>
+</g>
+<!-- Spark_Chunk&#45;&gt;Spark_KG_Extract -->
+<g id="edge17" class="edge">
+<title>Spark_Chunk-&gt;Spark_KG_Extract</title>
+<path fill="none" stroke="black" d="M945.17,-75.08C1003.71,-68.86 1085.18,-60.2 1145.69,-53.77"/>
+<polygon fill="black" stroke="black" points="1146.04,-57.25 1155.61,-52.71 1145.3,-50.29 1146.04,-57.25"/>
+</g>
+<!-- Spark_Load_Vector -->
+<g id="node17" class="node">
+<title>Spark_Load_Vector</title>
+<polygon fill="#afeeee" stroke="black" points="1529.08,-150.2 1408.8,-150.2 1408.8,-91.8 1529.08,-91.8 1529.08,-150.2"/>
+<text text-anchor="middle" x="1468.94" y="-133.6" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 5:</text>
+<text text-anchor="middle" x="1468.94" y="-116.8" font-family="Helvetica,sans-Serif" font-size="14.00">Bulk Ingest to</text>
+<text text-anchor="middle" x="1468.94" y="-100" font-family="Helvetica,sans-Serif" font-size="14.00">Vector Database</text>
+</g>
+<!-- Spark_Embed&#45;&gt;Spark_Load_Vector -->
+<g id="edge18" class="edge">
+<title>Spark_Embed-&gt;Spark_Load_Vector</title>
+<path fill="none" stroke="black" d="M1356.72,-121C1370.56,-121 1384.26,-121 1397.07,-121"/>
+<polygon fill="black" stroke="black" points="1397.04,-124.5 1407.04,-121 1397.04,-117.5 1397.04,-124.5"/>
+</g>
+<!-- Spark_Load_KG -->
+<g id="node18" class="node">
+<title>Spark_Load_KG</title>
+<polygon fill="#afeeee" stroke="black" points="1544.65,-74.2 1393.23,-74.2 1393.23,-15.8 1544.65,-15.8 1544.65,-74.2"/>
+<text text-anchor="middle" x="1468.94" y="-57.6" font-family="Helvetica,sans-Serif" font-size="14.00">Spark Job 6:</text>
+<text text-anchor="middle" x="1468.94" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Bulk Ingest to</text>
+<text text-anchor="middle" x="1468.94" y="-24" font-family="Helvetica,sans-Serif" font-size="14.00">Knowledge Graph DB</text>
+</g>
+<!-- Spark_KG_Extract&#45;&gt;Spark_Load_KG -->
+<g id="edge19" class="edge">
+<title>Spark_KG_Extract-&gt;Spark_Load_KG</title>
+<path fill="none" stroke="black" d="M1301.2,-45C1326.35,-45 1354.93,-45 1381.24,-45"/>
+<polygon fill="black" stroke="black" points="1381.23,-48.5 1391.23,-45 1381.23,-41.5 1381.23,-48.5"/>
+</g>
+<!-- Spark_Load_Vector&#45;&gt;Vector_DB -->
+<g id="edge20" class="edge">
+<title>Spark_Load_Vector-&gt;Vector_DB</title>
+<path fill="none" stroke="black" d="M1499.05,-150.63C1538.16,-189.96 1610.38,-260.98 1676.24,-317 1676.76,-317.45 1677.29,-317.9 1677.82,-318.34"/>
+<polygon fill="black" stroke="black" points="1675.55,-321.01 1685.49,-324.68 1680.01,-315.61 1675.55,-321.01"/>
+<text text-anchor="middle" x="1610.44" y="-299.79" font-family="Helvetica,sans-Serif" font-size="10.00">Populates</text>
+</g>
+<!-- Spark_Load_KG&#45;&gt;KG_DB -->
+<g id="edge21" class="edge">
+<title>Spark_Load_KG-&gt;KG_DB</title>
+<path fill="none" stroke="black" d="M1544.7,-74.38C1581.48,-91.18 1624.93,-114.76 1658.24,-144 1678.76,-162.02 1697.76,-185.31 1712.99,-206.43"/>
+<polygon fill="black" stroke="black" points="1709.99,-208.25 1718.62,-214.4 1715.71,-204.22 1709.99,-208.25"/>
+<text text-anchor="middle" x="1610.44" y="-147" font-family="Helvetica,sans-Serif" font-size="10.00">Populates</text>
+</g>
+</g>
+</svg>
