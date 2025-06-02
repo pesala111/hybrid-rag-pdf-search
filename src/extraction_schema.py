@@ -1,7 +1,6 @@
 import re
 from typing import Dict
 
-# Define your regex patterns
 regex_field_patterns = {
     "Product number": r"Product number.*?(\d{5,})",
     "Product name": r"Product name.*?:?\s*([^\n]+)",
@@ -33,8 +32,6 @@ regex_field_patterns = {
     "Candidate list substance": r"Candidate list substance.*?([^\n]+)",
     "Information according to Art. 33 of EU Regulation (EC) 1907/2006 (REACh)": r"(Information according to Art\. 33.*?REACh.*)",
     "Energy efficiency class": r"Energy efficiency class.*?([^\n]+)",
-
-    # New fields added
     "Category": r"Category.*?:?\s*([^\n]+)",
     "Nominal current": r"Nominal current.*?([\d.]+\s*A)",
     "Type of current": r"Type of current.*?:?\s*([^\n]+)",
@@ -59,13 +56,12 @@ def extract_keywords_with_regex(text: str) -> dict:
             value = match.group(1).strip() if match.lastindex else match.group(0).strip()
             extracted[field] = value
         else:
-            # Check if the field label exists anywhere in the text (case-insensitive)
             label_present = re.search(re.escape(field), text, re.IGNORECASE)
             if label_present:
                 present_but_unmatched.append(field)
     """
     if present_but_unmatched:
-        print("\n🛠️  ⚠️ Fields present in text but failed to extract:")
+        print("\n Fields present in text but failed to extract:")
         for field in present_but_unmatched:
             print(" -", field)
     """

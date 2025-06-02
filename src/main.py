@@ -8,5 +8,3 @@ while True:
         break
     answer = query_pipeline(user_q, store, chunks)
     print("💬", answer)
-
-

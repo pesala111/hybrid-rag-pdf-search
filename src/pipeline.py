@@ -1,4 +1,4 @@
-# pipeline.py
+import re
 import numpy as np
 from openai import OpenAI
 from typing import List, Dict
@@ -23,6 +23,20 @@ def build_pipeline():
 
 
 def query_pipeline(query: str, store: FaissVectorStore, chunks: List[Dict], top_k: int = TOP_K) -> str:
+    sku_match = re.search(r"\b\d{10,}\b", query)
+    if sku_match:
+        sku = sku_match.group(0)
+        for chunk in chunks:
+            if sku in chunk["content"]:
+                single_context = chunk["content"]
+                prompt = (
+                    "You are an assistant. Use the following context to answer the question.\n\n"
+                    f"Context:\n{single_context}\n\n"
+                    f"Question: {query}\n"
+                    "Answer:"
+                )
+                return call_llm_query(prompt)
+
     q_emb = np.array(embed_texts([query]), dtype='float32')
     results = store.search(q_emb, top_k)
     contexts = [
