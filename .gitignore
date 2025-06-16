@@ -13,7 +13,7 @@
 # Allow necessary files inside tracked directories
 !src/*.py
 !configs/*.py
-!data/**/*
+!data/dataset coding challenge-20250529T234530Z-1-001.zip
 
 # Prevent ignoring .gitignore itself
 !.gitignore

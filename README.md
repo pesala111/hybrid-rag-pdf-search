@@ -9,7 +9,6 @@
 ├── data
 │   └── dataset coding challenge-20250529T234530Z-1-001.zip
 ├── requirements.txt
-├── scalability.md
 └── src
     ├── embedder.py
     ├── extraction_schema.py
@@ -37,7 +36,7 @@ pip install -r requirements.txt
 ```
 
 #### 3. Set your OpenAI API key
-> Since this is a private repository, OpenAI API is set normally in the config.py, but if it doesn't workout, please change it with valid API in configs/config.py
+> Insert the OpenAI key in the "configs/config.py" file
 
 or do this appraoch:
 ```bash
