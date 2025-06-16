@@ -16,5 +16,5 @@ EXTRACT_DIR = os.getenv("EXTRACT_DIR", Path(tempfile.gettempdir()) / "pdf_datase
 TOP_K           = int(os.getenv("TOP_K",5))
 
 # API key
-OPENAI_API_KEY  = "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"
+OPENAI_API_KEY  = "path to your openai api key file"
 
