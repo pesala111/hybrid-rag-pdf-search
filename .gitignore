@@ -13,6 +13,7 @@
 # Allow necessary files inside tracked directories
 !src/*.py
 !configs/*.py
+!data/**/*
 
 # Prevent ignoring .gitignore itself
 !.gitignore
