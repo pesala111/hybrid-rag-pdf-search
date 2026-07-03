@@ -1,69 +1,97 @@
 # RAG-PDF-Search
 
+A retrieval-augmented generation (RAG) system that extracts text from PDF files, embeds them with OpenAI embeddings, indexes them in a FAISS vector store, and answers natural-language questions using GPT.
+
 ## Repository Structure
 
-```text
+```
 .
-├── configs
-│   └── config.py
-├── data
-│   └── dataset coding challenge-20250529T234530Z-1-001.zip
+├── configs/
+│   └── config.py          # Environment-based configuration
+├── src/
+│   ├── embedder.py        # Text embedding via OpenAI (text-embedding-3-small)
+│   ├── extraction_schema.py  # Regex-based metadata extraction
+│   ├── llm_client.py      # GPT query client with retry logic
+│   ├── main.py            # Interactive CLI entry point
+│   ├── pdf_loader.py      # PDF extraction, cleaning, and chunking
+│   ├── pipeline.py        # End-to-end build & query pipeline
+│   └── vector_store.py    # FAISS vector store wrapper
 ├── requirements.txt
-└── src
-    ├── embedder.py
-    ├── extraction_schema.py
-    ├── llm_client.py
-    ├── main.py
-    ├── pdf_loader.py
-    ├── pipeline.py
-    └── vector_store.py
+└── scalability.md         # Notes on scaling to 10k+ PDFs
 ```
 
 ## Getting Started
 
-#### 1. Clone the repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/pesala111/rag-pdf-search-pesala.git
-cd rag-pdf-search
+git clone https://github.com/pesala111/hybrid-rag-pdf-search.git
+cd hybrid-rag-pdf-search
 ```
 
-#### 2. Install Python dependencies
+### 2. Install Python dependencies
 
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-#### 3. Set your OpenAI API key
-> Insert the OpenAI key in the "configs/config.py" file
+### 3. Configure environment variables
 
-or do this appraoch:
-```bash
-export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+Create a `.env` file in the project root (this file is gitignored and never committed):
+
+```
+OPENAI_API_KEY=sk-...your-key-here...
+DATA_ZIP=/absolute/path/to/your/dataset.zip
 ```
 
-#### 4. Set the dataset path
-
-In configs/config.py, set the path to your dataset ZIP file by updating the DATA_ZIP variable.
-
-#### 5. Run the demo
+Alternatively, export them in your shell:
 
 ```bash
-python -m src.main
+export OPENAI_API_KEY="sk-...your-key-here..."
+export DATA_ZIP="/absolute/path/to/your/dataset.zip"
 ```
 
-You should see:
-
-```
-❓ Ask a question: ·
-```
-
-Now you can type something like:
-```
-What is the color temperature of the SIRIUS HRI 330W 2/CS 1/SKU?
-```
-and press Enter. The system will:
-1. Extract and chunk the PDFs (once).
-2. Build FAISS embeddings.
-3. Answer your question.
+> **Never hard-code your API key in source files or commit it to version control.**
+>
+> ### 4. Run the demo
+>
+> ```bash
+> python -m src.main
+> ```
+>
+> You should see:
+>
+> ```
+> ❓ Ask a question:
+> ```
+>
+> Type a question such as:
+>
+> ```
+> What is the color temperature of the SIRIUS HRI 330W?
+> ```
+>
+> and press Enter. The system will:
+>
+> 1. Extract and chunk the PDFs (once per run).
+> 2. 2. Build FAISS embeddings.
+>    3. 3. Retrieve the most relevant chunks.
+>       4. 4. Answer your question using the LLM.
+>         
+>          5. Type `exit` or `quit` to stop.
+>         
+>          6. ## Configuration
+>         
+>          7. | Variable | Default | Description |
+> |---|---|---|
+> | `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
+> | `DATA_ZIP` | `data/dataset.zip` | Path to the ZIP file containing PDFs |
+> | `EXTRACT_DIR` | system temp dir | Directory to extract PDFs into |
+> | `TOP_K` | `5` | Number of chunks retrieved per query |
+> | `LLM_MODEL` | `gpt-4o-mini` | OpenAI chat model to use |
+>
+> ## Scalability
+>
+> See [`scalability.md`](scalability.md) for a detailed discussion of how this system could be scaled to 10,000+ PDFs.
+> 
