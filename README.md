@@ -7,7 +7,7 @@ A retrieval-augmented generation (RAG) system that extracts text from PDF files,
 ```
 .
 ├── configs/
-│   └── config.py          # Environment-based configuration
+│   └── config.py         # Environment-based configuration
 ├── src/
 │   ├── embedder.py        # Text embedding via OpenAI (text-embedding-3-small)
 │   ├── extraction_schema.py  # Regex-based metadata extraction
@@ -16,7 +16,9 @@ A retrieval-augmented generation (RAG) system that extracts text from PDF files,
 │   ├── pdf_loader.py      # PDF extraction, cleaning, and chunking
 │   ├── pipeline.py        # End-to-end build & query pipeline
 │   └── vector_store.py    # FAISS vector store wrapper
+├── tests/                 # Pytest suite for pure-logic components
 ├── requirements.txt
+├── requirements-dev.txt   # Dev/test-only dependencies (pytest)
 └── scalability.md         # Notes on scaling to 10k+ PDFs
 ```
 
@@ -52,46 +54,47 @@ export OPENAI_API_KEY="sk-...your-key-here..."
 export DATA_ZIP="/absolute/path/to/your/sample dataset.zip"
 ```
 
-> **Never hard-code your API key in source files or commit it to version control.**
->
-> ### 4. Run the demo
->
-> ```bash
-> python -m src.main
-> ```
->
-> You should see:
->
-> ```
-> ❓ Ask a question:
-> ```
->
-> Type a question such as:
->
-> ```
-> What is the color temperature of the SIRIUS HRI 330W?
-> ```
->
-> and press Enter. The system will:
->
-> 1. Extract and chunk the PDFs (once per run).
-> 2. 2. Build FAISS embeddings.
->    3. 3. Retrieve the most relevant chunks.
->       4. 4. Answer your question using the LLM.
->         
->          5. Type `exit` or `quit` to stop.
->         
->          6. ## Configuration
->         
->          7. | Variable | Default | Description |
-> |---|---|---|
-> | `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
-> | `DATA_ZIP` | `data/sample dataset.zip` | Path to the ZIP file containing PDFs |
-> | `EXTRACT_DIR` | system temp dir | Directory to extract PDFs into |
-> | `TOP_K` | `5` | Number of chunks retrieved per query |
-> | `LLM_MODEL` | `gpt-4o-mini` | OpenAI chat model to use |
->
-> ## Scalability
->
-> See [`scalability.md`](scalability.md) for a detailed discussion of how this system could be scaled to 10,000+ PDFs.
-> 
+**Never hard-code your API key in source files or commit it to version control.**
+
+### 4. Run the demo
+
+```bash
+python -m src.main
+```
+
+You should see:
+
+```
+❓ Ask a question:
+```
+
+Type a question such as:
+
+```
+What is the color temperature of the SIRIUS HRI 330W?
+```
+
+and press Enter. The system will extract and chunk the PDFs (once per run), build FAISS embeddings, retrieve the most relevant chunks, and answer your question using the LLM. Type `exit` or `quit` to stop.
+
+## Configuration
+
+| Variable | Default | Description |
+|---|---|---|
+| `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
+| `DATA_ZIP` | `data/sample dataset.zip` | Path to the ZIP file containing PDFs |
+| `EXTRACT_DIR` | system temp dir | Directory to extract PDFs into |
+| `TOP_K` | `5` | Number of chunks retrieved per query |
+| `LLM_MODEL` | `gpt-4o-mini` | OpenAI chat model to use |
+
+## Running Tests
+
+This project includes a small pytest suite covering the pure-logic components (text chunking, metadata extraction, and the FAISS vector store wrapper). These tests do not call the OpenAI API.
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+## Scalability
+
+See [`scalability.md`](scalability.md) for a detailed discussion of how this system could be scaled to 10,000+ PDFs.
