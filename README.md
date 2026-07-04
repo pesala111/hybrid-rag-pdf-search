@@ -42,14 +42,14 @@ Create a `.env` file in the project root (this file is gitignored and never comm
 
 ```
 OPENAI_API_KEY=sk-...your-key-here...
-DATA_ZIP=/absolute/path/to/your/dataset.zip
+DATA_ZIP=/absolute/path/to/your/sample dataset.zip
 ```
 
 Alternatively, export them in your shell:
 
 ```bash
 export OPENAI_API_KEY="sk-...your-key-here..."
-export DATA_ZIP="/absolute/path/to/your/dataset.zip"
+export DATA_ZIP="/absolute/path/to/your/sample dataset.zip"
 ```
 
 > **Never hard-code your API key in source files or commit it to version control.**
@@ -86,7 +86,7 @@ export DATA_ZIP="/absolute/path/to/your/dataset.zip"
 >          7. | Variable | Default | Description |
 > |---|---|---|
 > | `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
-> | `DATA_ZIP` | `data/dataset.zip` | Path to the ZIP file containing PDFs |
+> | `DATA_ZIP` | `data/sample dataset.zip` | Path to the ZIP file containing PDFs |
 > | `EXTRACT_DIR` | system temp dir | Directory to extract PDFs into |
 > | `TOP_K` | `5` | Number of chunks retrieved per query |
 > | `LLM_MODEL` | `gpt-4o-mini` | OpenAI chat model to use |
