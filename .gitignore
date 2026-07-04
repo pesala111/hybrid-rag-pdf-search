@@ -5,15 +5,18 @@
 !src/
 !configs/
 !data/
+!tests/
 
 # Except these specific files
 !requirements.txt
 !scalability.md
+!requirements-dev.txt
 
 # Allow necessary files inside tracked directories
 !src/*.py
 !configs/*.py
 !data/sample dataset.zip
+!tests/*.py
 
 # Prevent ignoring .gitignore itself
 !.gitignore
